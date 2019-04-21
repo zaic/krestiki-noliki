@@ -7,18 +7,11 @@ class MyClass : public QObject {
     Q_OBJECT
 
 public:
-    MyClass() = default;
-    ~MyClass() = default;
+    MyClass(QObject& rootObject): m_rootObject(rootObject) {}
 
 public slots:
-    void cppSlot(const QString& msg) {
-       qDebug() << "Called the C++ slot with value:" << msg;
+    void cppSlot(const QString& msg);
 
-       /*
-       QQuickItem *item =
-           qobject_cast<QQuickItem*>(v.value<QObject*>());
-       qDebug() << "Item dimensions:" << item->width()
-                << item->height();
-       */
-    }
+private:
+    QObject& m_rootObject;
 };
