@@ -8,6 +8,8 @@ Window {
     height: 480
     title: qsTr("Krestiki-Noliki")
 
+    signal qmlSignal(string msg);
+
     function generateField() {
         for (var idx = 0; idx < 3; ++idx)
             for (var jdx = 0; jdx < 3; ++jdx) {
@@ -17,6 +19,17 @@ Window {
             }
     }
     Component.onCompleted: generateField();
+
+    Rectangle {
+        width: 200
+        height: 200
+        color: "red"
+
+        TapHandler {
+            //onTapped: console.log(this.parent.color)
+            onTapped: appWindow.qmlSignal("hello from tap");
+        }
+    }
 
     Text {
         id: infoText
