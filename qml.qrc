@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>krestik.svg</file>
+        <file>nolik.svg</file>
     </qresource>
 </RCC>
