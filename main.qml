@@ -8,7 +8,6 @@ Window {
     height: 480
     title: qsTr("Krestiki-Noliki")
 
-    signal qmlSignal(string msg);
     signal tapOnCell(int row, int col);
 
     Component.onCompleted: {
@@ -17,6 +16,7 @@ Window {
                 var newObject = Qt.createQmlObject('import QtQuick 2.0; Rectangle {border.width: 1; width: parent.width / 3; height: parent.height / 3; x: parent.width / 3 * ' + jdx + '; y: parent.height / 3 *' + idx + ';color: "lightblue"; property int num: 12; }',
                                                    appWindow,
                                                    "cell_" + idx + "_" + jdx);
+                newObject.objectName = "cell_" + idx + "_" + jdx;
             }
     }
 
@@ -40,12 +40,19 @@ Window {
 
     function switchCell(row, col, value) {
         infoText.text = "";
-        var el = findItemById("cell_" + idx + "_" + jdx);
-        console.log(el);
+        let el = null;
+        for (var idx = 0; idx < appWindow.contentItem.children.length; ++idx) {
+            if (appWindow.contentItem.children[idx].objectName === "cell_" + row + "_" + col) {
+                el = appWindow.contentItem.children[idx];
+                break;
+            }
+        }
+        var imgbject = Qt.createQmlObject('import QtQuick 2.0; Image { anchors.fill: parent; source: "' + (value === 1 ? 'krestik' : 'nolik') + '.svg"; fillMode: Image.PreserveAspectFit }',
+                                           el,
+                                           "img_" + row + "_" + col);
     }
 
     function endGame(whoWon) {
-        infoText.text = whoWon + " has been won";
-        mainHandler.onClicked = null;
+        infoText.text = whoWon + " has been won!";
     }
 }
