@@ -20,6 +20,7 @@ void MyClass::cppSlot(const int row, const int col) {
             || (m_cells[0][2] == m_nextTurnState && m_cells[1][1] == m_nextTurnState && m_cells[2][0] == m_nextTurnState)) {
             QMetaObject::invokeMethod(&m_rootObject, "endGame", Q_ARG(QVariant, m_nextTurnState == CellState::Krestik ? "Krestiki" : "Noliki"));
             m_nextTurnState = CellState::Empty;
+            return ;
         }
     }
 
